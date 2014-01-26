@@ -5,25 +5,19 @@
 
 # include <tools/Color.hpp>
 
-# using namespace Tools;
-
 namespace Scene
 {
   class Background
   {
-  private:
+  public:
     Color color;
 
   public:
     Background(void);
     Background(Color c);
-    Background(Background b);
 
   public:
     ~Background(void);
-
-  public:
-    Color& operator=(Background& b);
   };
 }
 

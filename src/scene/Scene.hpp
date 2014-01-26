@@ -1,6 +1,12 @@
 #ifndef SCENE_HPP
 # define SCENE_HPP
 
+# include <vector>
+
+# include <tools/Color.hpp>
+# include <tools/Ray.hpp>
+# include <scene/object/Object.hpp>
+
 class Scene
 {
 private:
