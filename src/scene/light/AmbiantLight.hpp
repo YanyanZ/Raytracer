@@ -1,19 +1,21 @@
 #ifndef AMBIANTLIGHT_HPP
 # define AMBIANTLIGHT_HPP
 
-using namesapce Tools;
+# include <scene/light/Light.hpp>
+
+# include <tools/Color.hpp>
+
+using namespace Tools;
 
 namespace Scene
 {
-  namespace Light
+  class Ambiant : public Light
   {
-    class Ambiant : public Light
-    {
-    public:
-      Ambiant(Color c);
-      ~Ambiant(void);
-    };
-  }
+  public:
+    Ambiant() : Light({0, 0, 0}) {};
+    Ambiant(Color c);
+    ~Ambiant(void);
+  };
 }
 
 #endif

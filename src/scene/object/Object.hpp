@@ -1,6 +1,16 @@
 #ifndef OBJECT_HPP
 # define OBJECT_HPP
 
+# include <tools/Color.hpp>
+# include <tools/Ray.hpp>
+
+# include <texture/TextureMapper.hpp>
+# include <texture/PerlinNoise.hpp>
+# include <texture/Checker.hpp>
+
+using namespace Tools;
+using namespace Texture;
+
 namespace Scene
 {
   enum {COLOR, TEXTURE_MAPPING, PERLIN, CHECKER, NO};
@@ -21,7 +31,7 @@ namespace Scene
     int tNormal;
 
   protected:
-    TextureMapper* m;
+    Mapper* m;
     Checker* check;
     PerlinNoise* pColor;
     PerlinNoise* pNormal;
@@ -50,7 +60,7 @@ namespace Scene
     void setPerlin(PerlinNoise* pNoise);
     void setPerlinNormal(PerlinNoise* pNoise);
     void setTypeNormal(int t);
-    void setMapper(TextureMapper* mp);
+    void setMapper(Mapper* mp);
 
   public:
     const double getEpsilon(void);

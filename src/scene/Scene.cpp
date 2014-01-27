@@ -1,14 +1,13 @@
-#include "Scene.hpp"
+# include "Scene.hpp"
 
-Scene::Scene()
+using namespace Scene;
+
+Descriptor::Descriptor()
 {
 }
 
-Scene::~Scene()
+Descriptor::~Descriptor()
 {
-  if (camera)
-    delete camera;
-
   if (objects)
     delete objects;
 
@@ -19,60 +18,40 @@ Scene::~Scene()
     delete plights;
 }
 
-void Scene::addObject(Object o)
+void Descriptor::addObject(Object o)
 {
   objects->push_back(o);
   nbObjects = objects->size();
 }
 
-void Scene::addDirectionalLight(Directional l)
+void Descriptor::addDirectionalLight(Directional l)
 {
   dlights->push_back(l);
   nbDlights = dlights->size();
 }
 
-void Scene::addAmbiantLight(Ambiant l)
+void Descriptor::addAmbiantLight(Ambiant l)
 {
   alights = l;
 }
 
-void Scene::addPointLight(Point l)
+void Descriptor::addPointLight(Point l)
 {
   plights->push_back(l);
   nbPlights = plights->size();
 }
 
-void Scene::changeCamera(Camera c)
+void Descriptor::changeCamera(Camera c)
 {
-  camera = c;
+  //camera = Camera(c);
 }
 
-Camera Scene::getCamera(void)
-{
-  return camera;
-}
-
-Object Scene::getObject(int i)
-{
-  return objects[i];
-}
-
-Point Scene::getPointLight(int i)
-{
-  return plights[i];
-}
-
-Directional Scene::getDirectionalLight(int i)
-{
-  return dlights[i];
-}
-
-bool Scene::pointIllumination(std::vector<double> p, int nlum)
+bool Descriptor::pointIllumination(std::vector<double> p, int nlum)
 {
   int i;
   bool illumination = true;
   double d;
-  double dLum;
+  double dLum = 0;
 
   std::vector<double> pos;
   std::vector<double> dir;
@@ -87,11 +66,11 @@ bool Scene::pointIllumination(std::vector<double> p, int nlum)
     p[j] /= p[3];
 
   r->setOrigin(p);
-  (*plights)[nlum]->getPosition(pos);
+  pos = (*plights)[nlum].getPosition();
 
   if (enableSoftShadow)
     for (int j = 0; j < 3; j++)
-      pos[j] += static_cast<double> random() / (static_cast<double> MAXINT / softShadow) - softShadow / 2.0;
+      pos[j] += static_cast<double>(random()) / (static_cast<double>(INT_MAX) / softShadow) - softShadow / 2.0;
 
   for (int j = 0; j < 3; j++)
     dir[j] = pos[j] - p[j];
@@ -104,9 +83,9 @@ bool Scene::pointIllumination(std::vector<double> p, int nlum)
   dLum = sqrt(dLum);
 
   i = 0;
-  while (illumination && i < nbObjets)
+  while (illumination && i < nbObjects)
   {
-    d = (*objects)[i]->hit(r, p2);
+    d = (*objects)[i].hit(r, p2);
 
     if (d < dLum && d > 0.001)
       illumination = false;
@@ -116,7 +95,7 @@ bool Scene::pointIllumination(std::vector<double> p, int nlum)
   return illumination;
 }
 
-bool Scene::directionalIllumination(std::vector<double> p, int nlum)
+bool Descriptor::directionalIllumination(std::vector<double> p, int nlum)
 {
   double i;
   bool illumination = true;
@@ -129,14 +108,14 @@ bool Scene::directionalIllumination(std::vector<double> p, int nlum)
     p[j] /= p[3];
   r->setOrigin(p);
 
-  (*dlights)[nlum]->getDirection (dir);
+  dir = (*dlights)[nlum].getDirection();
   for (int i = 0; i < 3; i++)
     dir[i] = - dir[i];
 
-  if (enableShadow)
+  if (enableSoftShadow)
   {
     for (int j = 0; j < 3; j++)
-      dir[j] += static_cast<double> random() / (static_cast<double>(MAXINT) / softShadow) - softShadow / 2.0;
+      dir[j] += static_cast<double>(random()) / (static_cast<double>(INT_MAX) / softShadow) - softShadow / 2.0;
     r->setDirection(dir);
   }
   else
@@ -145,8 +124,8 @@ bool Scene::directionalIllumination(std::vector<double> p, int nlum)
   i = 0;
   while (illumination && i < nbObjects)
   {
-    d = (*objects)[i]->hit(r, p2);
-    if (d < MAXDOUBLE && d > 0.001)
+    d = (*objects)[i].hit(r, p2);
+    if (d < DBL_MAX && d > 0.001)
       illumination = false;
     i++;
   }
@@ -154,81 +133,81 @@ bool Scene::directionalIllumination(std::vector<double> p, int nlum)
   return illumination;
 }
 
-Camera Scene::getCamera(void)
+Camera Descriptor::getCamera(void)
 {
   return camera;
 }
 
-Object Scene::getObject(int i)
+Object Descriptor::getObject(int i)
 {
   return (*objects)[i];
 }
 
-Point Scene::getPointLight(int i)
+Point Descriptor::getPointLight(int i)
 {
-  return (*plights)[i]
+  return (*plights)[i];
 }
 
-Directional Scene::getDirectionalLight(int i)
+Directional Descriptor::getDirectionalLight(int i)
 {
   return (*dlights)[i];
 }
 
-int Scene::getNbObject(void)
+int Descriptor::getNbObject(void)
 {
-  return nbObject;
+  return nbObjects;
 }
 
-int Scene::getNbPointLight(void)
+int Descriptor::getNbPointLight(void)
 {
   return nbPlights;
 }
 
-int Scene::getDirectional(void)
+int Descriptor::getNbDirectional(void)
 {
   return nbDlights;
 }
 
-int Scene::getNbShadowRay(void)
+int Descriptor::getNbShadowRay(void)
 {
   return nbShadowRay;
 }
 
-int Scene::getMaxTraceLevel(void)
+int Descriptor::getMaxTraceLevel(void)
 {
   return maxTraceLevel;
 }
 
-int Scene::getAntialiasing(void)
+int Descriptor::getAntialiasing(void)
 {
-  return antialisaing;
+  return antialiasing;
 }
 
-int Scene::getAAThreshold(void)
+double Descriptor::getAAThreshold(void)
 {
   return aThreshold;
 }
 
-int Scene::getOutputHeight(void)
+int Descriptor::getOutputHeight(void)
 {
   return outputH;
 }
 
-int Scene::getOutputW(void)
+int Descriptor::getOutputWidth(void)
 {
   return outputW;
 }
 
-Color Scene::getBackground(void)
+Color Descriptor::getBackground(void)
 {
   return bgColor;
 }
 
-void Scene::setGlobalSetting(int mtl, int anti, double aath, double ss,
-		      int nbrs, int oph, int opw)
+void Descriptor::setGlobalSetting(int mtl, int anti, double aath, double ss,
+				  int nbrs, int oph, int opw)
 {
   maxTraceLevel = mtl;
-  antialisaing = anti;
+  antialiasing = anti;
   aThreshold = aath;
   softShadow = ss;
   nbShadowRay = nbrs;
@@ -236,9 +215,12 @@ void Scene::setGlobalSetting(int mtl, int anti, double aath, double ss,
   outputW = opw;
 
   if (softShadow == -1)
-    enableShadow = false;
+    enableSoftShadow = false;
   else
-    enableShadow = true;
+    enableSoftShadow = true;
 }
 
-void Scene::setBackground(Color c);
+void Descriptor::setBackground(Color c)
+{
+  bgColor = c;
+}

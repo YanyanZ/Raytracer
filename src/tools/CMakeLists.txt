@@ -1,3 +1,4 @@
-set(SOURCES Ray.cpp)
+set(SOURCES Ray.cpp
+  Transformer.cpp)
 
 add_library(Tools STATIC ${SOURCES})

@@ -5,6 +5,9 @@
 # include <cmath>
 # include <vector>
 
+# include <tools/Color.hpp>
+# include <tools/Ray.hpp>
+
 using namespace Tools;
 
 namespace Scene
@@ -16,7 +19,7 @@ namespace Scene
 
   public:
     Light(Color c);
-    virtual ~Color(void);
+    virtual ~Light(void);
 
   public:
     void normalize(std::vector<double>& v);

@@ -2,36 +2,36 @@
 
 using namespace Scene;
 
-Light::Point::Point(std::vector<double> p, Color c)
-  : Light(c), position (p), c1 (0.0), c2 (0.0), c3 (0.0)
+Point::Point(std::vector<double> p, Color c)
+  : Point(c), position (p), c1 (0.0), c2 (0.0), c3 (0.0)
 {
   for (int i = 0; i < 4; i++)
     position /= position[3];
 }
 
-Light::Point::~Point(void)
+Point::~Point(void)
 {
 }
 
-const std::vector<const double> Light::Point::getDimmer(void)
+const std::vector<const double> Point::getDimmer(void)
 {
   return ({c1, c2, c3});
 }
 
-const std::vector<double> Light::Point::getPosition(void)
+const std::vector<double> Point::getPosition(void)
 {
   return position;
 }
 
-void Light::Point::setDimmer(double c1, double c2, double c3)
+void Point::setDimmer(double c1, double c2, double c3)
 {
   this.c1 = c1;
   this.c2 = c2;
   this.c3 = c3;
 }
 
-void Light::Point::getBrightness(Ray *r, std::vector<double> p,
-				 std::vector<double> n, Objet* o,
+void Point::getBrightness(Ray *r, std::vector<double> p,
+				 std::vector<double> n, Object* o,
 				 std::vector<double> l)
 {
   std::vector<double> lp;

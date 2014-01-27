@@ -2,10 +2,10 @@
 
 unsing namespace Scene;
 
-Light::Ambiant(Color c) : Light(c)
+Ambiant::Ambiant(Color c) : Light(c)
 {
 }
 
-Light::~Ambiant(void)
+Ambiant::~Ambiant(void)
 {
 }

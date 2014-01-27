@@ -3,28 +3,32 @@
 
 # include <vector>
 
+# include <tools/Ray.hpp>
+# include <tools/Color.hpp>
+
+# include <scene/light/Light.hpp>
+
+using namespace Tools;
+
 namespace Scene
 {
-  namespace Light
+  class Directional : public Light
   {
-    class Directional
-    {
-    protected:
-      std::vector<double> direction;
+  protected:
+    std::vector<double> direction;
 
-    public:
-      Directional(std::vector<double> d, Color c);
-      ~Directional(void);
+  public:
+    Directional(std::vector<double> d, Color c);
+    ~Directional(void);
 
-    public:
-      const std::vector<double> getDirection(void);
+  public:
+    const std::vector<double> getDirection(void);
 
-    public:
-      void getBrightness(Ray* r, std::vector<double> p,
-			 std::vector<double> n, Object* o,
-			 std::vector<double> l);
-    };
-  }
+  public:
+    void getBrightness(Ray* r, std::vector<double> p,
+		       std::vector<double> n, Object* o,
+		       std::vector<double> l);
+  };
 }
 
 #endif

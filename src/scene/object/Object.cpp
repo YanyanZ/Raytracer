@@ -161,7 +161,7 @@ void Object::setTypeNormal(int t)
   tnormal = t;
 }
 
-void Object::setMapper(TextureMapper* mp)
+void Object::setMapper(Mapper* mp)
 {
   m = mp;
 }

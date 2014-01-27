@@ -29,7 +29,9 @@ namespace Scene
     Transformer* t;
 
   public:
-    Camera(std::vector<double> p, std::vecctor<double> lkt);
+    Camera() {};
+    // Camera(Camera& c); a ajouter
+    Camera(std::vector<double> p, std::vector<double> lkt);
 
   public:
     virtual ~Camera(void);

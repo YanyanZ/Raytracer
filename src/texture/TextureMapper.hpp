@@ -7,16 +7,20 @@
 
 # include <tools/Transformer.hpp>
 
+using namespace Tools;
+
 namespace Texture
 {
-  enum {PLAN, SPHERE, UNKNOW};
-  class TextureMapper
+  enum {PLAN, SPHERE, UNKNOWN};
+  class Mapper
   {
   private:
     std::ifstream* file;
     std::string filename;
     unsigned char *map;
-    int w, int h, int intensity;
+    int w;
+    int h;
+    int intensity;
     int freq;
     int tObject;
     double rSphere;
@@ -25,9 +29,9 @@ namespace Texture
     Transformer* t;
 
   public:
-    TextureMapper(std::string fn);
-    TextureMapper(void);
-    ~TextureMapper(void);
+    Mapper(std::string fn);
+    Mapper(void);
+    ~Mapper(void);
 
   public:
     void fillMap(void);
