@@ -2,7 +2,7 @@
 
 using namespace Scene;
 
-Object::object()
+Object::Object()
   : epsilon (0.001),
     rhoA (0.5),
     rhoD (0.5),
@@ -11,9 +11,9 @@ Object::object()
     rhoT (0.0),
     n (1.0),
     shiness (1.0),
-    color (Color(1.0, 1.0, 1.0)),
+    color ({1.0, 1.0, 1.0}),
     tPigment (COLOR),
-    tNormal (NO)
+    tNormal (NO),
     m (NULL)
 {
 }
@@ -22,7 +22,7 @@ Object::~Object(void)
 {
 }
 
-const double Objet::getEpsilon(void)
+const double Object::getEpsilon(void)
 {
   return epsilon;
 }
@@ -62,28 +62,28 @@ void Object::getColor(std::vector<double> p, std::vector<double> cObj)
   std::vector<double> p2;
   p2.resize(4);
 
-  switch(tpigment)
+  switch(tPigment)
   {
     case COLOR:
       for (int i = 0; i < 3; i++)
 	cObj[i] = (1 - rhoT) * color[i];
       break;
     case CHECKER:
-      ccr->getChecker(p, cObj);
+      check->getChecker(p, cObj);
       break;
     case PERLIN:
       pColor->PerlinColor(p, cObj);
       break;
     case TEXTURE_MAPPING:
-      t->InvTransformation(p2, p);
-      mp->getMapping(p2, cObj);
+      t->transformationInv(p2, p);
+      m->getMapping(p2, cObj);
       break;
     default:
       break;
   }
 }
 
-Checker Object::getChecker(void)
+Checker* Object::getChecker(void)
 {
   return check;
 }
@@ -123,7 +123,7 @@ void Object::setRhoT(double t)
 
 void Object::setRefractionIndex(double n)
 {
-  this.n = n;
+  this->n = n;
 }
 
 void Object::setShiness(double s)
@@ -133,7 +133,7 @@ void Object::setShiness(double s)
 
 void Object::setTPigment(int t)
 {
-  tpigment = t;
+  tPigment = t;
 }
 
 void Object::setColor(Color c)
@@ -158,7 +158,7 @@ void Object::setPerlinNormal(PerlinNoise* pNoise)
 
 void Object::setTypeNormal(int t)
 {
-  tnormal = t;
+  tNormal = t;
 }
 
 void Object::setMapper(Mapper* mp)
@@ -177,7 +177,7 @@ bool Object::sendRay(Ray* r, std::vector<double> i,
 
   dir.resize(4);
 
-  if (rhot == 0)
+  if (rhoT == 0)
     return false;
   else
   {
@@ -199,9 +199,9 @@ bool Object::sendRay(Ray* r, std::vector<double> i,
     thetat = asin(deviation * sin(thetai));
     coef = cos(thetat) + deviation * ps;
 
-    r->getDirection(dir);
-    for (int ii = 0; ii < 3; i++)
-      dir[ii] = deciation * dir[ii] - coef * normal[ii];
+    dir = r->getDirection();
+    for (int ii = 0; ii < 3; ii++)
+      dir[ii] = deviation * dir[ii] - coef * normal[ii];
     dir[3] = 0;
     rSend->setDirection(dir);
 
@@ -221,10 +221,10 @@ bool Object::reflectRay(Ray *r, std::vector<double> i,
   {
     rReflect->setOrigin(i);
     rReflect->setIn(r->isIn());
-    r->getDirection(dir);
+    dir = r->getDirection();
 
     for (int j = 0; j < 3; j++)
-      dir[j] dir[j] - 2 * r->dot(normal) * normal[j];
+      dir[j] = dir[j] - 2 * r->dot(normal) * normal[j];
     dir[3] = 0;
 
     rReflect->setDirection(dir);
@@ -235,11 +235,10 @@ bool Object::reflectRay(Ray *r, std::vector<double> i,
 
 double Object::hit(Ray* r, std::vector<double> i)
 {
-  return MAXDOUBLE;
+  return DBL_MAX;
 }
 
 void Object::correctNormal(std::vector<double> normal, std::vector<double> p,
-
 			   Ray* r)
 {
   std::vector<double> temp;
@@ -251,31 +250,31 @@ void Object::correctNormal(std::vector<double> normal, std::vector<double> p,
   rd.resize(4);
   tmp.resize(4);
 
-  if (tnormal == PERLIN)
-    pNormal->PerlinNormal(p, n);
+  if (tNormal == PERLIN)
+    pNormal->PerlinNormal(p, normal);
 
-  r->getDirection(tmp);
-  t->InvTransformation(rd, tmp);
+  tmp = r->getDirection();
+  t->transformationInv(rd, tmp);
 
   ps = 0;
   for (int i = 0; i < 3; i++)
-    ps += n[i] * rd[i];
+    ps += normal[i] * rd[i];
 
   if (ps > 0.0)
   {
-    temp[0] = -n[0];
-    temp[1] = -n[1];
-    temp[2] = -n[2];
+    temp[0] = -normal[0];
+    temp[1] = -normal[1];
+    temp[2] = -normal[2];
     temp[3] = 0;
   }
   else
   {
-    temp[0] = n[0];
-    temp[1] = n[1];
-    temp[2] = n[2];
+    temp[0] = normal[0];
+    temp[1] = normal[1];
+    temp[2] = normal[2];
     temp[3] = 0;
   }
 
-  t->transformation(n, temp);
-  t->normalize(n);
+  t->transformation(normal, temp);
+  t->normalize(normal);
 }

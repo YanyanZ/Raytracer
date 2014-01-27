@@ -1,6 +1,10 @@
 #ifndef OBJECT_HPP
 # define OBJECT_HPP
 
+# include <vector>
+# include <iostream>
+# include <cfloat>
+
 # include <tools/Color.hpp>
 # include <tools/Ray.hpp>
 
@@ -72,7 +76,7 @@ namespace Scene
     const double getRefractionIndex(void);
     const double getShiness(void);
     void getColor(std::vector<double> p, std::vector<double> cObj);
-    Checker getChecker(void);
+    Checker* getChecker(void);
 
   public:
     bool sendRay(Ray* r, std::vector<double> i,

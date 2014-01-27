@@ -1,4 +1,4 @@
-#include "Camera.cpp"
+# include "Camera.hpp"
 
 using namespace Scene;
 
@@ -14,9 +14,9 @@ Camera::~Camera()
 
 /******************** SETER ********************/
 
-void Camera::setFocale(const double f)
+void Camera::setFocal(const double f)
 {
-  focale = f;
+  focal = f;
 }
 
 void Camera::setFov(const double f)
@@ -29,29 +29,29 @@ void Camera::setSProjection(const double p)
   sprojection = p;
 }
 
-void Camera::TProjection(const int p)
+void Camera::setTProjection(const int p)
 {
   tprojection = p;
 }
 
 /******************** GETTER ********************/
 
-const double getFocal(void)
+const double Camera::getFocal(void)
 {
   return (sprojection / (2.0 * tan(fov / 2.0 * (M_PI / 180.0))));
 }
 
-const double getFov(void)
+const double Camera::getFov(void)
 {
   return fov;
 }
 
-const double getSProjection(void)
+const double Camera::getSProjection(void)
 {
   return sprojection;
 }
 
-const int getTProjection(void)
+const int Camera::getTProjection(void)
 {
   return tprojection;
 }
@@ -68,12 +68,12 @@ void Camera::rScene(Ray *r1, Ray *r2)
   pos1 = r1->getOrigin();
   dir1 = r1->getDirection();
 
-  t->transform(pos2, pos1);
-  t->transform(dir2, dir);
+  t->transformation(pos2, pos1);
+  t->transformation(dir2, dir1);
 
   r2->setOrigin(pos2);
   r2->setDirection(dir2);
-  r2->setIn(r->isIn());
+  r2->setIn(r1->isIn());
 }
 
 void Camera::setTransformation(void)
@@ -95,16 +95,16 @@ void Camera::setTransformation(void)
   for (int i = 0; i < vlookAt.size(); i++)
     vlookAt[i] = lookAt[i] - position[i];
 
-  d = sqrt(sqrt(vlookAt[1], 2) +
-	   sqrt(vlookAt[2], 2));
+  d = sqrt(pow(vlookAt[1], 2) +
+	   pow(vlookAt[2], 2));
 
   theta = vlookAt[1] < 0 ?
     -acos(vlookAt[2] / d) : acos(vlookAt[2] / d);
 
   rotation[0] = theta;
 
-  d = sqrt(sqrt(vlookAt[0], 2) +
-	   sqrt(vlookAt[2], 2));
+  d = sqrt(pow(vlookAt[0], 2) +
+	   pow(vlookAt[2], 2));
 
   theta = vlookAt[0] < 0 ?
     -acos(vlookAt[2] / d) : acos(vlookAt[2] / d);

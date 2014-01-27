@@ -2,35 +2,35 @@
 
 using namespace Scene;
 
-Light::Directional(std::vector<double> d, Color c)
+Directional::Directional(std::vector<double> d, Color c)
   : Light(c)
 {
   direction = d;
 }
 
-Light::~Directional(void)
+Directional::~Directional(void)
 {
 }
 
-const std::vector<double> Light::getDirection(void)
+const std::vector<double> Directional::getDirection(void)
 {
   return direction;
 }
 
-void Light::getBrightness(Ray* r, std::vector<double> p,
-			  std::vector<double> n, Object* o,
-			  std::vector<double> l)
+void Directional::getBrightness(Ray* r, std::vector<double> p,
+				std::vector<double> n, Object* o,
+				std::vector<double> l)
 {
   std::vector<double> reflexion;
   std::vector<double> dir;
   Color cObj;
   double ps1;
   double ps2;
-  double dist;
+  //double dist;
 
   reflexion.resize(4);
 
-  cObj = o->getColor(p);
+  o->getColor(p, cObj);
   for (int i = 0; i < 3; i++)
     dir[i] = - direction[i];
 
@@ -49,13 +49,13 @@ void Light::getBrightness(Ray* r, std::vector<double> p,
     if (ps2 > 0.0)
     {
       for (int i = 0; i < 3; i++)
-	l[i] = color[i] * (o->getRhod * cObj[i] * ps1 +
-			   o->getRhos() * pow(ps2, o->getShiness()));
+	l[i] = color[i] * (o->getRhoD() * cObj[i] * ps1 +
+			   o->getRhoS() * pow(ps2, o->getShiness()));
     }
     else
     {
       for (int i = 0; i < 3; i++)
-	l[i] = color[i] * (o->getRhod() * cObj[i] * ps1);
+	l[i] = color[i] * (o->getRhoD() * cObj[i] * ps1);
     }
   }
   else

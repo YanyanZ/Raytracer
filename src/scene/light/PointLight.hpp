@@ -4,12 +4,21 @@
 # include <vector>
 # include <cmath>
 
+# include <tools/Color.hpp>
+# include <tools/Ray.hpp>
+# include <tools/Transformer.hpp>
+
+# include <scene/light/Light.hpp>
+# include <scene/object/Object.hpp>
+
+using namespace Tools;
+
 namespace Scene
 {
   class Point : public Light
   {
   private:
-    std::vector<double> postion;
+    std::vector<double> position;
     double c1, c2, c3;
 
   public:
@@ -20,8 +29,8 @@ namespace Scene
     void setDimmer(double c1, double c2, double c3);
 
   public:
-    const std::vector<const double> getDimmer(void);
-    const std::vector<double> getPosition(void);
+    std::vector<double> getDimmer(void);
+    std::vector<double> getPosition(void);
 
   public:
     void getBrightness(Ray *r, std::vector<double> p,

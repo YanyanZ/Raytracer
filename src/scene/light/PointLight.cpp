@@ -3,31 +3,32 @@
 using namespace Scene;
 
 Point::Point(std::vector<double> p, Color c)
-  : Point(c), position (p), c1 (0.0), c2 (0.0), c3 (0.0)
+  : Light(c), position (p), c1 (0.0), c2 (0.0), c3 (0.0)
 {
   for (int i = 0; i < 4; i++)
-    position /= position[3];
+    position[i] /= position[3];
 }
 
 Point::~Point(void)
 {
 }
 
-const std::vector<const double> Point::getDimmer(void)
+std::vector<double> Point::getDimmer(void)
 {
-  return ({c1, c2, c3});
+  std::vector<double> out = {c1, c2, c3};
+  return (out);
 }
 
-const std::vector<double> Point::getPosition(void)
+std::vector<double> Point::getPosition(void)
 {
   return position;
 }
 
 void Point::setDimmer(double c1, double c2, double c3)
 {
-  this.c1 = c1;
-  this.c2 = c2;
-  this.c3 = c3;
+  this->c1 = c1;
+  this->c2 = c2;
+  this->c3 = c3;
 }
 
 void Point::getBrightness(Ray *r, std::vector<double> p,
@@ -45,7 +46,7 @@ void Point::getBrightness(Ray *r, std::vector<double> p,
   double ps1, ps2;
   float fd;
 
-  cObj = o->getColor(p);
+  o->getColor(p, cObj);
   for (int i = 0; i < 3; i++)
     lp[i] = position[i] / position[3] - p[i] / p[3];
 

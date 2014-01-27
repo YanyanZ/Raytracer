@@ -6,6 +6,7 @@
 # include <tools/Ray.hpp>
 # include <tools/Color.hpp>
 
+# include <scene/object/Object.hpp>
 # include <scene/light/Light.hpp>
 
 using namespace Tools;
@@ -19,7 +20,7 @@ namespace Scene
 
   public:
     Directional(std::vector<double> d, Color c);
-    ~Directional(void);
+    virtual ~Directional(void);
 
   public:
     const std::vector<double> getDirection(void);

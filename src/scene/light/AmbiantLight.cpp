@@ -1,6 +1,6 @@
-#include "AmbiantLight.cpp"
+#include "AmbiantLight.hpp"
 
-unsing namespace Scene;
+using namespace Scene;
 
 Ambiant::Ambiant(Color c) : Light(c)
 {

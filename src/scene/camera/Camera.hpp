@@ -6,6 +6,8 @@
 # include <cmath>
 
 # include <tools/Ray.hpp>
+# include <tools/Color.hpp>
+# include <tools/Transformer.hpp>
 
 using namespace Tools;
 
