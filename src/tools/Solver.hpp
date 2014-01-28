@@ -54,9 +54,9 @@ namespace Tools
     double& operator[] (int i);
     PolynomialSolver operator+() const;
     PolynomialSolver operator-() const;
-    PolynomialSolver& operator+=(const Polynomial& p);
-    PolynomialSolver& operator-=(const Polynomial& p);
-    PolynomialSolver& operator*=(const Polynomial& p);
+    PolynomialSolver& operator+=(const PolynomialSolver& p);
+    PolynomialSolver& operator-=(const PolynomialSolver& p);
+    PolynomialSolver& operator*=(const PolynomialSolver& p);
     PolynomialSolver& operator*=(const double& c);
     PolynomialSolver& operator/=(const double& c);
 
@@ -77,10 +77,10 @@ namespace Tools
   public:
     double eval(const double& c);
     int solveQuadratic(double& c1, double& c2);
-    int solveQuadratic(double* c);
-    int solveCubic(double* c);
-    int solveQuartic(double* c);
-    int solve(double* c);
+    int solveQuadratic(std::vector<double>& c);
+    int solveCubic(std::vector<double>& c);
+    int solveQuartic(std::vector<double>& c);
+    int solve(std::vector<double>& c);
 
   public:
     int degree(void);

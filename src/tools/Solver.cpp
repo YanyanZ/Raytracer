@@ -227,7 +227,7 @@ PolynomailSolver PolynomialSolver::operator*(const PolynomialSolver& p1,
   return r;
 }
 
-PolynomialSolver PolynomialSolver::operator - () const
+PolynomialSolver PolynomialSolver::operator-() const
 {
   PolynomialSolver p;
   p.n = n;
@@ -250,7 +250,7 @@ PolynomialSolver PolynomialSolver::operator/(const PolynomialSolver& p,
   return p * (1.0 * c);
 }
 
-int PolynomialSolver::solveQuadratic(double* y)
+int PolynomialSolver::solveQuadratic(std::vector<double>& y)
 {
   double d, t, a, b, c;
 
@@ -287,7 +287,7 @@ int PolynomialSolver::solveQuadratic(double* y)
   return 2;
 }
 
-int PolynomialSolver::solveCubic(double* y)
+int PolynomialSolver::solveCubic(std::vector<double>& y)
 {
   double Q, R, Q3, R2, sQ, d, an, theta;
   double A2, a1, a2, a3;
@@ -355,7 +355,7 @@ int PolynomialSolver::solveCubic(double* y)
   }
 }
 
-int PolynomialSolver::solveQuartic(double* results)
+int PolynomialSolver::solveQuartic(std::vector<double>& results)
 {
   double roots[3];
   double c12, z, p, q, q1, q2, r, d1, d2;

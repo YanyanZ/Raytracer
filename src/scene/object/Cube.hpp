@@ -9,6 +9,7 @@
 # include <tools/Color.hpp>
 # include <tools/Ray.hpp>
 # include <tools/Transformer.hpp>
+# include <tools/Solver.hpp>
 
 # include <scene/object/Object.hpp>
 

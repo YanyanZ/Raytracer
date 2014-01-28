@@ -24,6 +24,9 @@ namespace Scene
     std::vector<double> p3;
     std::vector<double> p4;
 
+  private:
+    Transformer* trans;
+
   public:
     Parallelogram(std::vector<double> pp1,
 		  std::vector<double> pp2,

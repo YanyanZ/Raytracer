@@ -8,14 +8,18 @@
 
 # include <scene/object/Object.hpp>
 
-# include <tools/Ray.cpp>
+# include <tools/Ray.hpp>
+# include <tools/Transformer.hpp>
 
 using namespace Tools;
 
 namespace Scene
 {
-  class Plan : public object
+  class Plan : public Object
   {
+  private:
+    Transformer* trans;
+
   public:
     Plan(void);
     virtual ~Plan(void);

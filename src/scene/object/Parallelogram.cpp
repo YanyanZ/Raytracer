@@ -7,6 +7,7 @@ Parallelogram::Parallelogram(std::vector<double> pp1,
 			     std::vector<double> pp3)
   : p1 (pp1), p2 (pp2), p3 (pp3)
 {
+  trans = new Transformer();
 }
 
 Parallelogram::~Parallelogram(void)
@@ -71,16 +72,16 @@ double Parallelogram::hit(Ray* r, std::vector<double> i)
 
     dist = distance (p, pos2);
 
-    trans->doTransformation(i,p);
+    trans->transformation(i,p);
   }
   else
-    dist = DLB_MAX;
+    dist = DBL_MAX;
 
   return dist;
 
 }
 
-void Parallelogram::normal(std::vector<double> Ray* r,
+void Parallelogram::normal(std::vector<double> p, Ray* r,
 			   std::vector<double> normal)
 {
   std::vector<double> pt = {0, 0, 0, 0};

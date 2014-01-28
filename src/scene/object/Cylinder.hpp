@@ -8,6 +8,7 @@
 
 # include <tools/Ray.hpp>
 # include <tools/Color.hpp>
+# include <tools/Transformer.hpp>
 
 # include <scene/object/Object.hpp>
 
@@ -19,7 +20,10 @@ namespace Scene
   {
   private:
     double radius;
-    double lenght;
+    double length;
+
+  private:
+    Transformer* trans;
 
   public:
     Cylinder(double r, double l);

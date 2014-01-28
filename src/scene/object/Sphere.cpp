@@ -4,21 +4,23 @@ using namespace Scene;
 
 Sphere::Sphere(double r) : radius (r)
 {
+  trans = new Transformer();
 }
 
 Sphere::~Sphere(void)
 {
 }
 
-Sphere::hit(Ray* r, std::vector<double> i)
+double Sphere::hit(Ray* r, std::vector<double> i)
 {
   double a, b, c;
   double delta;
-  double t1, t2, t;
-  double d;
+  double t1, t2, t = 0;
+  double d = 0;
 
   std::vector<double> p = {0, 0, 0, 0};
   std::vector<double> temp = {0, 0, 0, 0};
+  std::vector<double> pos = {0, 0, 0, 0};
   std::vector<double> dir = {0, 0, 0, 0};
   std::vector<double> pos2 = {0, 0, 0, 0};
   std::vector<double> dir2 = {0, 0, 0, 0};
@@ -36,14 +38,14 @@ Sphere::hit(Ray* r, std::vector<double> i)
   delta = b * b - a * c;
 
   if (delta <= 0)
-    d = DLB_MAX;
+    d = DBL_MAX;
   else
   {
     t1 = (-b + sqrt (delta)) / a;
     t2 = (-b - sqrt (delta)) / a;
 
     if (t1 <= epsilon && t2 <= epsilon)
-      d = DLB_MAX;
+      d = DBL_MAX;
     else
     {
 

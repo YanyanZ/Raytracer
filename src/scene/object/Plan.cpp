@@ -1,10 +1,13 @@
 # include "Plan.hpp"
 
-Plan::Plan(void) : Ojbect()
+using namespace Scene;
+
+Plan::Plan(void) : Object()
 {
+  trans = new Transformer();
 }
 
-Plan::~plan(void)
+Plan::~Plan(void)
 {
 }
 
@@ -39,15 +42,15 @@ double Plan::hit (Ray* r, std::vector<double> i)
 
       d = distance (p, pos2);
 
-      trans->doTransformation(i,p);
+      trans->transformation(i, p);
 
       return d;
     }
     else
-      return DLB_MAX;
+      return DBL_MAX;
   }
   else
-    return DLB_MAX;
+    return DBL_MAX;
 }
 
 void Plan::normal(std::vector<double> p, Ray* r,
