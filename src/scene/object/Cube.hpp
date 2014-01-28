@@ -4,9 +4,11 @@
 # include <vector>
 # include <cmath>
 # include <iostream>
+# include <cfloat>
 
 # include <tools/Color.hpp>
 # include <tools/Ray.hpp>
+# include <tools/Transformer.hpp>
 
 # include <scene/object/Object.hpp>
 
@@ -14,6 +16,9 @@ namespace Scene
 {
   class Cube : public Object
   {
+  private:
+    Transformer* trans;
+
   public:
     Cube(void);
     virtual ~Cube(void);

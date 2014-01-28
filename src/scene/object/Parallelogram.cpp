@@ -4,9 +4,8 @@ using namespace Scene;
 
 Parallelogram::Parallelogram(std::vector<double> pp1,
 			     std::vector<double> pp2,
-			     std::vector<double> pp3,
-			     std::vector<double> pp4)
-  : p1 (pp1), p2 (pp2), p3 (pp3), p4 (pp4)
+			     std::vector<double> pp3)
+  : p1 (pp1), p2 (pp2), p3 (pp3)
 {
 }
 

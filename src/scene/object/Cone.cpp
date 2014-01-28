@@ -7,6 +7,7 @@ Cone::Cone(double sr, double lr, double hg)
   sRadius = sr;
   lRadius = lr;
   h = hg;
+  trans = new Transformer();
 }
 
 Cone::~Cone(void)
@@ -17,15 +18,15 @@ double Cone::hit(Ray* r, std::vector<double> i)
 {
   double a, b, c, k, l, alpha, hh;
   double delta;
-  double t1, t2, t;
-  double d;
+  double t1, t2, t = 0;
+  double d = 0;
 
   std::vector<double> p = {0, 0, 0, 0};
   std::vector<double> temp = {0, 0, 0, 0};
   std::vector<double> pos = {0, 0, 0, 0};
   std::vector<double> dir = {0, 0, 0, 0};
   std::vector<double> pos2 = {0, 0, 0, 0};
-  std::vectir<double> dir2 = {0, 0, 0, 0};
+  std::vector<double> dir2 = {0, 0, 0, 0};
 
   pos = r->getOrigin();
   dir = r->getDirection();
@@ -38,7 +39,7 @@ double Cone::hit(Ray* r, std::vector<double> i)
   l = pos2[0] - hh;
 
   a = pow(dir2[1], 2) + pow(dir2[2], 2) - k * pow(dir2[0], 2);
-  b = dir2[1] * pos2[i] + dir2[2] * pos2[2] - k * l * dir2[0];
+  b = dir2[1] * pos2[1] + dir2[2] * pos2[2] - k * l * dir2[0];
   c = pow(pos2[2], 2) + pow(pos2[1], 2) - k * l * l;
 
   delta = b * b - a * c;
@@ -159,12 +160,11 @@ double Cone::hit(Ray* r, std::vector<double> i)
 	  else
 	    d = DBL_MAX;
 	}
-	else
-	{
-	  if ((t1 <= t2 && t1 > epsilon) || (t2 < t1 && t2 < epsilon))
-	    t = t1;
-	  else if ((t2 < t1 && t2 > epsilon)
-		   || (t1 < t2 && t1 < epsilon))
+
+	if ((t1 <= t2 && t1 > epsilon) || (t2 < t1 && t2 < epsilon))
+	  t = t1;
+	else if ((t2 < t1 && t2 > epsilon)
+		 || (t1 < t2 && t1 < epsilon))
 	    t = t2;
 
 	  p[0] = t * dir2[0] + pos2[0];
@@ -172,10 +172,10 @@ double Cone::hit(Ray* r, std::vector<double> i)
 	  p[2] = t * dir2[2] + pos2[2];
 	  p[3] = 1.0;
 	  d = distance (p, pos2);
-	  if (p[0] > hauteur)
+	  if (p[0] > h)
 	  {
-	    t = (hauteur - pos2[0]) / dir2[0];
-	    p[0] = hauteur;
+	    t = (h - pos2[0]) / dir2[0];
+	    p[0] = h;
 	    p[1] = t * dir2[1] + pos2[1];
 	    p[2] = t * dir2[2] + pos2[2];
 	    p[3] = 1.0;
@@ -186,7 +186,7 @@ double Cone::hit(Ray* r, std::vector<double> i)
 	      d = distance (p, pos2);
 	    }
 	    else
-	      d = MAXDOUBLE;
+	      d = DBL_MAX;
 	  }
 	  if (p[0] < 0.0)
 	  {
@@ -202,13 +202,12 @@ double Cone::hit(Ray* r, std::vector<double> i)
 	      d = distance (p, pos2);
 	    }
 	    else
-	      d = MAXDOUBLE;
+	      d = DBL_MAX;
 	  }
 	}
       }
     }
-    trans->doTransformation(i,p);
-  }
+  trans->transformation(i,p);
 
   return d;
 }

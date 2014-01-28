@@ -4,9 +4,11 @@
 # include <vector>
 # include <iostream>
 # include <cmath>
+# include <cfloat>
 
 # include <tools/Ray.hpp>
 # include <tools/Color.hpp>
+# include <tools/Transformer.hpp>
 
 # include <scene/object/Object.hpp>
 # include <scene/object/Parallelogram.hpp>
@@ -19,6 +21,7 @@ namespace Scene
     double side;
     std::vector<Parallelogram*> sides;
     int hitSide;
+    Transformer *trans;
 
   public:
     Box(double s);

@@ -9,7 +9,8 @@
 # include <scene/object/Object.hpp>
 
 # include <tools/Color.hpp>
-# include <tool/Ray.hpp>
+# include <tools/Ray.hpp>
+# include <tools/Transformer.hpp>
 
 using namespace Tools;
 
@@ -26,8 +27,7 @@ namespace Scene
   public:
     Parallelogram(std::vector<double> pp1,
 		  std::vector<double> pp2,
-		  std::vector<double> pp3,
-		  std::vector<double> pp4);
+		  std::vector<double> pp3);
     virtual ~Parallelogram(void);
 
   public:

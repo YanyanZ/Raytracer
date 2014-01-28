@@ -6,6 +6,7 @@ Box::Box(double s)
   : side (s)
 {
   double l = side / 2.0;
+
   std::vector<double> p1 = {l, l, -l, 1};
   std::vector<double> p2 = {l, l, l, 1};
   std::vector<double> p3 = {l, -l, l, 1};
@@ -15,7 +16,7 @@ Box::Box(double s)
   std::vector<double> p7 = {-l, l, l, 1};
   std::vector<double> p8 = {-l, -l, l, 1};
 
-  Transformer *trans = new Transformer();
+  trans = new Transformer();
 
   sides.resize(6);
   sides[0] = new Parallelogram(p1, p2, p4);
@@ -64,11 +65,11 @@ double Box::hit(Ray* r, std::vector<double> i)
     {
       d = d2;
       temp = i2;
-      hitSides = j;
+      hitSide = j;
     }
   }
 
-  trans->transformation(i, temps);
+  trans->transformation(i, temp);
 
   return d;
 

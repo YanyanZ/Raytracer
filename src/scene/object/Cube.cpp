@@ -52,10 +52,10 @@ double Cube::hit(Ray* r, std::vector<double> i)
   nbRoots = spoly.solveQuartic(roots);
 
   if (!nbRoots)
-    return DLB_MAX;
+    return DBL_MAX;
   else
   {
-    t = DLB_MAX;
+    t = DBL_MAX;
     for (int ii = 0; ii < nbRoots; ii++)
       if (roots[ii] > epsilon && roots[ii] < t)
 	t = roots[ii];
@@ -65,8 +65,8 @@ double Cube::hit(Ray* r, std::vector<double> i)
     p[2] = t * dir[2] + pos2[2] / pos2[3];
     p[3] = 1.0;
 
-    if (t == DLB_MAX)
-      dist = DLB_MAX;
+    if (t == DBL_MAX)
+      dist = DBL_MAX;
     else
       dist = distance (p, pos);
 
